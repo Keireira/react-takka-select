@@ -1,13 +1,15 @@
-import React, { Component } from 'react'
+import * as React from 'react'
 
-import ExampleComponent from 'react-takka-select'
+import Select from 'react-takka-select'
 
-export default class App extends Component {
+class App extends React.PureComponent {
   render() {
     return (
-      <div>
-        <ExampleComponent/>
+      <div className="app">
+        <Select/>
       </div>
     )
   }
 }
+
+export default App
