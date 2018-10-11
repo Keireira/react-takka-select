@@ -1,0 +1,49 @@
+{
+	"name": "react-takka-select",
+	"version": "1.0.0",
+	"scripts": {
+		"start": "rollup -c -w",
+		"build": "rollup -c",
+		"predeploy": "cd ./example && yarn install && yarn run build"
+	},
+	"author": {
+		"name": "Alena Dzhukich",
+		"email": "github@alena.moe",
+		"url": "https://alena.moe"
+	},
+	"license": "UNLICENSED",
+	"main": "./dist/index.js",
+	"module": "./dist/index.es.js",
+	"jsnext:main": "./dist/index.es.js",
+	"files": ["dist"],
+	"devDependencies": {
+		"@babel/core": "^7.1.2",
+		"@babel/plugin-proposal-class-properties": "^7.1.0",
+		"@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+		"@babel/preset-env": "^7.1.0",
+		"@babel/preset-react": "^7.0.0",
+		"@babel/preset-typescript": "^7.1.0",
+		"@types/react": "^16.4.16",
+		"@types/react-dom": "^16.0.9",
+		"babel-eslint": "^10.0.1",
+		"babel-loader": "^8.0.4",
+		"babel-plugin-styled-components": "^1.8.0",
+		"react": "^16.5.2",
+		"react-dom": "^16.5.2",
+		"rollup": "^0.66.5",
+		"rollup-plugin-babel": "^4.0.3",
+		"rollup-plugin-commonjs": "^9.1.8",
+		"rollup-plugin-node-resolve": "^3.4.0",
+		"rollup-plugin-peer-deps-external": "^2.2.0",
+		"rollup-plugin-postcss-modules": "^1.0.9",
+		"rollup-plugin-typescript2": "^0.17.1",
+		"rollup-plugin-url": "^2.0.1",
+		"styled-components": "^3.4.9",
+		"tslib": "^1.9.3",
+		"typescript": "^3.1.1"
+	},
+	"peerDependencies": {
+		"react": "^16.5.2",
+		"styled-components": "^3.4.9"
+	}
+}

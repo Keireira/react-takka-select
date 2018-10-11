@@ -1,0 +1,38 @@
+.vscode
+
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+.apdisk
+
+.idea
+
+deploy/deploy.retry
+
+# Project specific
+.tmp
+/build
+archive
+node_modules
+npm-debug.log
+yarn-error.log
+test.results.json
+/coverage
+/.rpt2_cache
+/dist
+
+# fuse-box
+/.fusebox

@@ -1,13 +1,15 @@
+# This package is under development!
+
 ## Roadmap:
 
-- [ ] Настроить проект, сборку, выкатку
-- [ ] Добавить самый обычный селект без фишек
-- [ ] Добавить кастомизацию через Styled Components && classNames
-- [ ] Добавить возможность поиска по вариантам
-- [ ] Добавить возможность очищать поле ввода
-- [ ] Добавить лоадер
-- [ ] Добавить поиск без изначального показа всех вариантов
-- [ ] Добавить вывод дефолтных опций
+- [x] Bootstrap project, setup publish proccess
+- [ ] Add default select without any gimmicks
+- [ ] Styled Components integration
+- [ ] Fuzzy search
+- [ ] Clearing
+- [ ] Loader
+- [ ] Default options
+- [ ] ???
 
 
 ## License
