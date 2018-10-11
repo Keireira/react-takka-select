@@ -1,6 +1,6 @@
 {
 	"name": "react-takka-select",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"scripts": {
 		"start": "rollup -c -w",
 		"build": "rollup -c",
@@ -15,7 +15,9 @@
 	"main": "./dist/index.js",
 	"module": "./dist/index.es.js",
 	"jsnext:main": "./dist/index.es.js",
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"devDependencies": {
 		"@babel/core": "^7.1.2",
 		"@babel/plugin-proposal-class-properties": "^7.1.0",
