@@ -2,8 +2,7 @@
 	"name": "react-takka-select-example",
 	"homepage": "https://github.com/Keireira/react-takka-select",
 	"version": "0.0.0",
-	"license": "MIT",
-	"private": true,
+	"license": "UNLICENSED",
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build"
