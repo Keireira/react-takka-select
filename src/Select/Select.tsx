@@ -1,7 +1,9 @@
 import * as React from 'react'
 
+import { ArrowDown } from '../Icon'
+
 import { SelectProps, SelectState } from './Select.d'
-import Root, { InputContainer, Input, Indicators, Indicator, Options, Option } from './styles'
+import Root, { InputContainer, Input, Indicators, Indicator, RotateIndicator, Options, Option } from './styles.js'
 
 class Select extends React.PureComponent<SelectProps, SelectState> {
 	static defaultProps = {
@@ -18,8 +20,18 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 
 	showOptions = (): void => this.setState({ isOpened: true })
 
+	onSelectHd = (event) => {
+		const { onSelect, options, labelKey } = this.props
+
+		if (typeof onSelect === 'function') {
+			const finded = options.find((option) => option[labelKey] === event.target.innerText)
+
+			onSelect(finded)
+		}
+	}
+
 	render() {
-		const { isForcedOpened, options, valueKey, labelKey } = this.props
+		const { isForcedOpened, options, valueKey, labelKey, isLoading, isSearchable } = this.props
 		const { isOpened } = this.state
 
 		return (
@@ -28,11 +40,18 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 					<Input
 						onFocus={this.showOptions}
 						onBlur={this.hideOptions}
+						value={this.props.value[labelKey]}
+						readOnly={!isSearchable}
 					/>
 
 					<Indicators>
-						<Indicator/>
-						<Indicator/>
+						{(isLoading) && (
+							<Indicator/>
+						)}
+
+						<RotateIndicator isOpened={isOpened}>
+							<ArrowDown/>
+						</RotateIndicator>
 					</Indicators>
 				</InputContainer>
 
@@ -40,7 +59,12 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 					<Options>
 						{options.map((option) => {
 							return (
-								<Option key={option[valueKey]}>{option[labelKey]}</Option>
+								<Option
+									key={option[valueKey]}
+									onMouseDown={this.onSelectHd}
+								>
+									{option[labelKey]}
+								</Option>
 							)
 						})}
 					</Options>

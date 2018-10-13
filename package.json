@@ -15,9 +15,7 @@
 	"main": "./dist/index.js",
 	"module": "./dist/index.es.js",
 	"jsnext:main": "./dist/index.es.js",
-	"files": [
-		"dist"
-	],
+	"files": ["dist", "LICENSE.md"],
 	"devDependencies": {
 		"@svgr/rollup": "^3.1.0",
 		"@types/react": "^16.4.16",

@@ -5,6 +5,12 @@ export interface SelectProps {
 	options: {
 		[anyKey: string]: any,
 	}[];
+	isLoading: boolean;
+	value: {
+		[anyKey: string]: any,
+	};
+	isSearchable: boolean;
+	onSelect: (newValue: { [anyKey: string]: any }) => void;
 }
 
 export interface SelectState {
