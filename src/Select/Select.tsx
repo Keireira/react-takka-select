@@ -1,9 +1,10 @@
 import * as React from 'react'
 
 import { ArrowDown } from '../Icon'
+import SelectOption from '../SelectOption'
 
 import { SelectProps, SelectState } from './Select.d'
-import Root, { InputContainer, Input, Indicators, Indicator, RotateIndicator, Options, Option } from './styles.js'
+import Root, { InputContainer, Input, Indicators, Indicator, RotateIndicator, Options } from './styles.js'
 
 class Select extends React.PureComponent<SelectProps, SelectState> {
 	static defaultProps = {
@@ -20,18 +21,8 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 
 	showOptions = (): void => this.setState({ isOpened: true })
 
-	onSelectHd = (event) => {
-		const { onSelect, options, labelKey } = this.props
-
-		if (typeof onSelect === 'function') {
-			const finded = options.find((option) => option[labelKey] === event.target.innerText)
-
-			onSelect(finded)
-		}
-	}
-
 	render() {
-		const { isForcedOpened, options, valueKey, labelKey, isLoading, isSearchable } = this.props
+		const { isForcedOpened, options, valueKey, labelKey, isLoading, onSelect, isSearchable } = this.props
 		const { isOpened } = this.state
 
 		return (
@@ -45,9 +36,7 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 					/>
 
 					<Indicators>
-						{(isLoading) && (
-							<Indicator/>
-						)}
+						{(isLoading) && <Indicator/>}
 
 						<RotateIndicator isOpened={isOpened}>
 							<ArrowDown/>
@@ -57,16 +46,11 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 
 				{((typeof isForcedOpened === 'boolean') ? isForcedOpened : isOpened) && (
 					<Options>
-						{options.map((option) => {
-							return (
-								<Option
-									key={option[valueKey]}
-									onMouseDown={this.onSelectHd}
-								>
-									{option[labelKey]}
-								</Option>
-							)
-						})}
+						{options.map((option) => (
+							<SelectOption key={option[valueKey]} onSelect={onSelect} options={options} labelKey={labelKey}>
+								{option[labelKey]}
+							</SelectOption>
+						))}
 					</Options>
 				)}
 			</Root>
