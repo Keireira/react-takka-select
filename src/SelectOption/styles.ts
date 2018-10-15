@@ -1,17 +1,23 @@
 import styled from 'styled-components'
 
-import { rgba } from '@helpers'
-
 export default styled.li`
 	list-style: none;
-	padding: 12px 0 12px 20px;
+	padding: 20px;
 
 	cursor: pointer;
-
 	transition: background 0.15s ease;
-	background-color: ${rgba('#2f3640', 0.1)};
+
+	&:first-child {
+		border-top-left-radius: 2px;
+		border-top-right-radius: 2px;
+	}
+
+	&:last-child {
+		border-bottom-left-radius: 2px;
+		border-bottom-right-radius: 2px;
+	}
 
 	&:hover {
-		background-color: ${rgba('#fbc531', 0.6)};
+		background-color: #f4f4f4;
 	}
 `

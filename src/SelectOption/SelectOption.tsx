@@ -15,10 +15,10 @@ class SelectOption extends React.PureComponent<SelectOptionProps> {
 	}
 
 	render() {
-		const { children } = this.props
+		const { children, CustomComponent } = this.props
 
 		return (
-			<Root onMouseDown={this.onSelectHd}>
+			<Root as={CustomComponent} onMouseDown={this.onSelectHd}>
 				{children}
 			</Root>
 		)

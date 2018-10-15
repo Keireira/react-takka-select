@@ -1,5 +1,5 @@
 type Option = {
-	[key: string]: string;
+	[key: string]: any;
 }
 
 export interface SelectOptionProps {
@@ -7,4 +7,5 @@ export interface SelectOptionProps {
 	onSelect: (finded: Option) => void;
 	options: Option[];
 	labelKey: string;
+	CustomComponent?: any;
 }
