@@ -2,17 +2,14 @@
 	"name": "react-takka-select-example",
 	"homepage": "https://github.com/Keireira/react-takka-select",
 	"version": "0.0.0",
-	"license": "MIT",
-	"private": true,
+	"license": "UNLICENSED",
 	"scripts": {
 		"start": "react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test --env=jsdom",
-		"eject": "react-scripts eject"
+		"build": "react-scripts build"
 	},
 	"dependencies": {
-		"react": "^16.4.1",
-		"react-dom": "^16.4.1",
+		"react": "^16.5.2",
+		"react-dom": "^16.5.2",
 		"react-scripts": "^1.1.4",
 		"react-takka-select": "link:.."
 	}

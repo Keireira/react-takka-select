@@ -1,5 +1,9 @@
 # This package is under development!
 
+| Prop | default value | description |
+|------|---------------|-------------|
+| isForcedOpened | undefined | — |
+
 ## Roadmap:
 
 - [x] Bootstrap project, setup publish proccess
