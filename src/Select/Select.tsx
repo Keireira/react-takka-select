@@ -2,14 +2,16 @@ import * as React from 'react'
 
 import { ArrowDown } from '../Icon'
 import SelectOption from '../SelectOption'
+import Indicator, { RotateIndicator } from '../Indicator'
 
 import { SelectProps, SelectState } from './Select.d'
-import Root, { InputContainer, Input, Indicators, Indicator, RotateIndicator, Options } from './styles.js'
+import Root, { InputContainer, Input, Indicators, Options } from './styles.js'
 
 class Select extends React.PureComponent<SelectProps, SelectState> {
 	static defaultProps = {
 		valueKey: 'value',
 		labelKey: 'label',
+		components: {},
 		options: [],
 	}
 
@@ -22,7 +24,7 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 	showOptions = (): void => this.setState({ isOpened: true })
 
 	render() {
-		const { isForcedOpened, options, valueKey, labelKey, isLoading, onSelect, isSearchable } = this.props
+		const { isForcedOpened, options, valueKey, labelKey, isLoading, onSelect, isSearchable, components } = this.props
 		const { isOpened } = this.state
 
 		return (
@@ -36,9 +38,13 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 					/>
 
 					<Indicators>
-						{(isLoading) && <Indicator/>}
+						{(isLoading) && (
+							<Indicator>
+								...
+							</Indicator>
+						)}
 
-						<RotateIndicator isOpened={isOpened}>
+						<RotateIndicator isActive={isOpened}>
 							<ArrowDown/>
 						</RotateIndicator>
 					</Indicators>
@@ -47,7 +53,13 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 				{((typeof isForcedOpened === 'boolean') ? isForcedOpened : isOpened) && (
 					<Options>
 						{options.map((option) => (
-							<SelectOption key={option[valueKey]} onSelect={onSelect} options={options} labelKey={labelKey}>
+							<SelectOption
+								key={option[valueKey]}
+								onSelect={onSelect}
+								options={options}
+								labelKey={labelKey}
+								CustomComponent={components.option}
+							>
 								{option[labelKey]}
 							</SelectOption>
 						))}

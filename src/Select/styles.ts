@@ -1,31 +1,16 @@
-import styled from '@styled'
+import styled from 'styled-components'
 
 export const Options = styled.ul`
 	position: absolute;
-	top: 100%;
+	top: calc(100% + 5px);
 	right: 0;
 	left: 0;
 
 	margin: 0;
-	padding: 0;
-`
+	padding: 10px;
 
-interface IndicatorProps {
-  isOpened?: boolean;
-}
-
-export const Indicator = styled<IndicatorProps, 'div'>('div')`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	height: 40px;
-	width: 40px;
-`
-
-export const RotateIndicator = styled(Indicator)`
-	transition: transform 0.2s ease-in-out;
-	transform: ${(props) => props.isOpened ? 'rotate(180deg)' : ''};
+	border-radius: 2px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 `
 
 export const Indicators = styled.div`
@@ -34,15 +19,14 @@ export const Indicators = styled.div`
 
 export const Input = styled.input`
 	flex-grow: 1;
-	padding: 12px 0 12px 20px;
+	padding: 20px 0 20px 20px;
 
 	color: #2f3640;
 	font-size: 16px;
 	line-height: 19px;
 
-	outline: none;
 	border: none;
-
+	outline: none;
 	background-color: transparent;
 
 	&[disabled] {
@@ -55,16 +39,19 @@ export const Input = styled.input`
 `
 
 export const InputContainer = styled.div`
-	border: 1px solid #2f3640;
-	background-color: #fff;
 	display: flex;
 	align-items: center;
+
+	background-color: #fff;
+
+	border-radius: 2px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 `
 
 export default styled.div`
 	position: relative;
 
-	line-height: 19px;
-	font-size: 16px;
 	color: #2f3640;
+	font-size: 16px;
+	line-height: 19px;
 `
