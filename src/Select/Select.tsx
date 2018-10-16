@@ -1,11 +1,11 @@
 import * as React from 'react'
 
 import { ArrowDown } from '../Icon'
-import { Option, Indicators } from '..'
+import { Option, Indicators, Input } from '..'
 import Indicator, { RotateIndicator } from '../Indicator'
 
 import { SelectProps, SelectState } from './Select.d'
-import Root, { InputContainer, Input, Options } from './styles.js'
+import Root, { InputContainer, Options } from './styles.js'
 
 class Select extends React.PureComponent<SelectProps, SelectState> {
 	static defaultProps = {
@@ -35,6 +35,7 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 						onBlur={this.hideOptions}
 						value={this.props.value[labelKey]}
 						readOnly={!isSearchable}
+						CustomComponent={components.input}
 					/>
 
 					<Indicators CustomComponent={components.indicators}>

@@ -22,6 +22,10 @@ const Indicators = styled.div`
 	border: 2px dashed lightgreen;
 `
 
+const Input = styled.input`
+	background-color: lightcoral;
+`
+
 class App extends React.PureComponent {
 	state = {
 		value: options[0],
@@ -43,6 +47,7 @@ class App extends React.PureComponent {
 					components={{
 						option: Option,
 						indicators: Indicators,
+						input: Input,
 					}}
 				/>
 			</div>
