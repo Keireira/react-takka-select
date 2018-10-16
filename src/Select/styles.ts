@@ -13,10 +13,6 @@ export const Options = styled.ul`
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 `
 
-export const Indicators = styled.div`
-	display: flex;
-`
-
 export const Input = styled.input`
 	flex-grow: 1;
 	padding: 20px 0 20px 20px;

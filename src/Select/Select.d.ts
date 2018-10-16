@@ -11,7 +11,7 @@ export interface SelectProps {
 	};
 	isSearchable: boolean;
 	components: {
-		[key: string]: any,
+		[key: string]: React.ReactType | keyof JSX.IntrinsicElements,
 	};
 	onSelect: (newValue: { [anyKey: string]: any }) => void;
 }

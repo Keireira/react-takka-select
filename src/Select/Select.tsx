@@ -1,11 +1,11 @@
 import * as React from 'react'
 
 import { ArrowDown } from '../Icon'
-import SelectOption from '../SelectOption'
+import { SelectOption, Indicators } from '..'
 import Indicator, { RotateIndicator } from '../Indicator'
 
 import { SelectProps, SelectState } from './Select.d'
-import Root, { InputContainer, Input, Indicators, Options } from './styles.js'
+import Root, { InputContainer, Input, Options } from './styles.js'
 
 class Select extends React.PureComponent<SelectProps, SelectState> {
 	static defaultProps = {
