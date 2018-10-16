@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { ArrowDown } from '../Icon'
-import { SelectOption, Indicators } from '..'
+import { Option, Indicators } from '..'
 import Indicator, { RotateIndicator } from '../Indicator'
 
 import { SelectProps, SelectState } from './Select.d'
@@ -53,7 +53,7 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 				{((typeof isForcedOpened === 'boolean') ? isForcedOpened : isOpened) && (
 					<Options>
 						{options.map((option) => (
-							<SelectOption
+							<Option
 								key={option[valueKey]}
 								onSelect={onSelect}
 								options={options}
@@ -61,7 +61,7 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 								CustomComponent={components.option}
 							>
 								{option[labelKey]}
-							</SelectOption>
+							</Option>
 						))}
 					</Options>
 				)}
