@@ -11,11 +11,15 @@ const options = [
 ]
 
 const Option = styled.li`
-	background-color: lightpink;
+	border: 2px dashed lightpink;
 
 	&:hover {
-		background-color: lightblue;
+		border-color: lightblue;
 	}
+`
+
+const Indicators = styled.div`
+	border: 2px dashed lightgreen;
 `
 
 class App extends React.PureComponent {
@@ -38,6 +42,7 @@ class App extends React.PureComponent {
 					isSearchable={false}
 					components={{
 						option: Option,
+						indicators: Indicators,
 					}}
 				/>
 			</div>

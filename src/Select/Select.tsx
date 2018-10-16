@@ -37,7 +37,7 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 						readOnly={!isSearchable}
 					/>
 
-					<Indicators>
+					<Indicators CustomComponent={components.indicators}>
 						{(isLoading) && (
 							<Indicator>
 								...
