@@ -1,11 +1,11 @@
 import * as React from 'react'
 
-import { ArrowDown } from '../Icon'
-import SelectOption from '../SelectOption'
-import Indicator, { RotateIndicator } from '../Indicator'
+import { ArrowDown } from 'components/Icon'
+import Indicator, { RotateIndicator } from 'components/Indicator'
+import { Option, Indicators, Input, Options, InputWrapper } from 'components'
 
+import Root from './styles'
 import { SelectProps, SelectState } from './Select.d'
-import Root, { InputContainer, Input, Indicators, Options } from './styles.js'
 
 class Select extends React.PureComponent<SelectProps, SelectState> {
 	static defaultProps = {
@@ -29,15 +29,16 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 
 		return (
 			<Root>
-				<InputContainer>
+				<InputWrapper>
 					<Input
 						onFocus={this.showOptions}
 						onBlur={this.hideOptions}
 						value={this.props.value[labelKey]}
 						readOnly={!isSearchable}
+						CustomComponent={components.input}
 					/>
 
-					<Indicators>
+					<Indicators CustomComponent={components.indicators}>
 						{(isLoading) && (
 							<Indicator>
 								...
@@ -48,12 +49,12 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 							<ArrowDown/>
 						</RotateIndicator>
 					</Indicators>
-				</InputContainer>
+				</InputWrapper>
 
 				{((typeof isForcedOpened === 'boolean') ? isForcedOpened : isOpened) && (
 					<Options>
 						{options.map((option) => (
-							<SelectOption
+							<Option
 								key={option[valueKey]}
 								onSelect={onSelect}
 								options={options}
@@ -61,7 +62,7 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 								CustomComponent={components.option}
 							>
 								{option[labelKey]}
-							</SelectOption>
+							</Option>
 						))}
 					</Options>
 				)}
