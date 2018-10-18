@@ -1,5 +1,4 @@
 import * as React from 'react'
-import styled from 'styled-components'
 
 import Select from 'react-takka-select'
 
@@ -9,22 +8,6 @@ const options = [
 	{ id: 2, label: 'Jumps over' },
 	{ id: 3, label: 'The lazy dog' },
 ]
-
-const Option = styled.li`
-	border: 2px dashed lightpink;
-
-	&:hover {
-		border-color: lightblue;
-	}
-`
-
-const Indicators = styled.div`
-	border: 2px dashed lightgreen;
-`
-
-const Input = styled.input`
-	background-color: lightcoral;
-`
 
 class App extends React.PureComponent {
 	state = {
@@ -44,11 +27,11 @@ class App extends React.PureComponent {
 					options={options}
 					onSelect={this.onSelect}
 					isSearchable={false}
-					components={{
-						option: Option,
-						indicators: Indicators,
-						input: Input,
-					}}
+					// components={{
+					// 	option: Option,
+					// 	indicators: Indicators,
+					// 	input: Input,
+					// }}
 				/>
 			</div>
 		)
