@@ -1,9 +1,9 @@
 import * as React from 'react'
 
 import Root from './styles'
-import { SelectOptionProps } from './SelectOption.d'
+import { OptionProps } from './Option.d'
 
-class SelectOption extends React.PureComponent<SelectOptionProps> {
+class Option extends React.PureComponent<OptionProps> {
 	onSelectHd = (event): void => {
 		const { onSelect, options, labelKey } = this.props
 
@@ -25,4 +25,4 @@ class SelectOption extends React.PureComponent<SelectOptionProps> {
 	}
 }
 
-export default SelectOption
+export default Option
