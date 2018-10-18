@@ -1,11 +1,11 @@
 import * as React from 'react'
 
-import { ArrowDown } from '../Icon'
-import { Option, Indicators, Input, Options } from '..'
-import Indicator, { RotateIndicator } from '../Indicator'
+import { ArrowDown } from 'components/Icon'
+import Indicator, { RotateIndicator } from 'components/Indicator'
+import { Option, Indicators, Input, Options, InputWrapper } from 'components'
 
+import Root from './styles'
 import { SelectProps, SelectState } from './Select.d'
-import Root, { InputContainer } from './styles.js'
 
 class Select extends React.PureComponent<SelectProps, SelectState> {
 	static defaultProps = {
@@ -29,7 +29,7 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 
 		return (
 			<Root>
-				<InputContainer>
+				<InputWrapper>
 					<Input
 						onFocus={this.showOptions}
 						onBlur={this.hideOptions}
@@ -49,7 +49,7 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 							<ArrowDown/>
 						</RotateIndicator>
 					</Indicators>
-				</InputContainer>
+				</InputWrapper>
 
 				{((typeof isForcedOpened === 'boolean') ? isForcedOpened : isOpened) && (
 					<Options>

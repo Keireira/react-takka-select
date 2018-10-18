@@ -5,10 +5,10 @@ import { IndicatorsProps } from './Indicators.d'
 
 class Indicators extends React.PureComponent<IndicatorsProps> {
 	render() {
-		const { children, CustomComponent } = this.props
+		const { children, CustomComponent, ...restProps } = this.props
 
 		return (
-			<Root as={CustomComponent}>{children}</Root>
+			<Root as={CustomComponent} {...restProps}>{children}</Root>
 		)
 	}
 }
