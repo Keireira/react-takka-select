@@ -18,4 +18,5 @@ export interface SelectProps {
 
 export interface SelectState {
 	isOpened: boolean;
+	currentFocusId: string | number;
 }

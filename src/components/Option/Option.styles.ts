@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export default styled.li`
+export default styled.li<{ isActive: boolean }>`
 	list-style: none;
 	padding: 20px;
 
@@ -17,7 +17,5 @@ export default styled.li`
 		border-bottom-right-radius: 2px;
 	}
 
-	&:hover {
-		background-color: #f4f4f4;
-	}
+	${(props) => props.isActive ? 'background-color: #f4f4f4;' : ''}
 `

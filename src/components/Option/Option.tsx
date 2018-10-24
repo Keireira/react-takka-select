@@ -14,11 +14,24 @@ class Option extends React.PureComponent<OptionProps> {
 		}
 	}
 
+	onMouseEnter = () => {
+		const { setCurrentFocusId, optionFocusId } = this.props
+
+		if (typeof setCurrentFocusId === 'function') {
+			setCurrentFocusId(optionFocusId)
+		}
+	}
+
 	render() {
-		const { children, CustomComponent } = this.props
+		const { children, CustomComponent, isActive } = this.props
 
 		return (
-			<Root as={CustomComponent} onMouseDown={this.onSelectHd}>
+			<Root
+				as={CustomComponent}
+				onMouseDown={this.onSelectHd}
+				onMouseEnter={this.onMouseEnter}
+				isActive={isActive}
+			>
 				{children}
 			</Root>
 		)
