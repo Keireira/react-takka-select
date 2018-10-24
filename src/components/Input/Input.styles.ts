@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export default styled.input`
+export default styled.input<{ ref?: any }>`
 	flex-grow: 1;
 	padding: 20px 0 20px 20px;
 

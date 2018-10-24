@@ -1,3 +1,5 @@
+export type FocusId = number;
+
 export interface SelectProps {
 	isForcedOpened: boolean;
 	labelKey: string;
@@ -18,4 +20,5 @@ export interface SelectProps {
 
 export interface SelectState {
 	isOpened: boolean;
+	currentFocusId: FocusId;
 }
