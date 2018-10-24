@@ -2,9 +2,8 @@ import * as React from 'react'
 
 import { ArrowDown } from 'components/Icon'
 import Indicator, { RotateIndicator } from 'components/Indicator'
-import { Option, Indicators, Input, Options, InputWrapper } from 'components'
+import { Option, Indicators, Input, Options, InputWrapper, SelectBody } from 'components'
 
-import Root from './Select.styles'
 import { getNextFocusId } from './Select.utils'
 import { SelectProps, SelectState, FocusId } from './Select.d'
 
@@ -56,7 +55,7 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 		const { isOpened, currentFocusId } = this.state
 
 		return (
-			<Root>
+			<SelectBody>
 				<InputWrapper>
 					<Input
 						myRef={this.input}
@@ -109,7 +108,7 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 						})}
 					</Options>
 				)}
-			</Root>
+			</SelectBody>
 		)
 	}
 }
