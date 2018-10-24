@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import Root from './styles'
+import Root from './InputWrapper.styles'
 import { InputWrapperProps } from './InputWrapper.d'
 
 class InputWrapper extends React.PureComponent<InputWrapperProps> {

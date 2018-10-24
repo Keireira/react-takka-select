@@ -1,24 +1,33 @@
 import * as React from 'react'
 
-import Root from './styles'
+import Root from './Option.styles'
 import { OptionProps } from './Option.d'
 
 class Option extends React.PureComponent<OptionProps> {
-	onSelectHd = (event): void => {
-		const { onSelect, options, labelKey } = this.props
+	onSelectHd = (): void => {
+		const { onSelect, optionFocusId } = this.props
 
-		if (typeof onSelect === 'function') {
-			const finded = options.find((option) => option[labelKey] === event.target.innerText)
+		this.setFocusId()
+		onSelect(optionFocusId)
+	}
 
-			onSelect(finded)
-		}
+	setFocusId = (): void => {
+		const { setCurrentFocusId, optionFocusId } = this.props
+
+		setCurrentFocusId(optionFocusId)
 	}
 
 	render() {
-		const { children, CustomComponent } = this.props
+		const { children, CustomComponent, isActive } = this.props
 
 		return (
-			<Root as={CustomComponent} onMouseDown={this.onSelectHd}>
+			<Root
+				isActive={isActive}
+				as={CustomComponent}
+
+				onMouseDown={this.onSelectHd}
+				onMouseEnter={this.setFocusId}
+			>
 				{children}
 			</Root>
 		)

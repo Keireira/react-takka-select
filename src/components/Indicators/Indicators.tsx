@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import Root from './styles'
+import Root from './Indicators.styles'
 import { IndicatorsProps } from './Indicators.d'
 
 class Indicators extends React.PureComponent<IndicatorsProps> {

@@ -7,15 +7,6 @@ import commonjs from 'rollup-plugin-commonjs'
 
 import pkg from './package.json'
 
-// @babel/core
-// @babel/plugin-proposal-class-properties
-// @babel/plugin-proposal-object-rest-spread
-// @babel/preset-env
-// @babel/preset-react
-// @babel/preset-typescript
-// babel-eslint
-// babel-plugin-styled-components
-
 export default {
 	input: 'src/index.ts',
 	output: [
@@ -37,7 +28,11 @@ export default {
 		external(),
 		url(),
 		svgr(),
-		resolve(),
+		resolve({
+			jsnext: true,
+			main: true,
+			browser: true,
+		}),
 		typescript({
 			rollupCommonJSResolveHack: true,
 			clean: true,
