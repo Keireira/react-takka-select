@@ -58,7 +58,7 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 			<SelectBody>
 				<InputWrapper>
 					<Input
-						myRef={this.input}
+						forwardRed={this.input}
 						isOpened={isOpened}
 						dropFocus={this.dropFocus}
 						CustomComponent={components.input}

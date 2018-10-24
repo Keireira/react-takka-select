@@ -41,11 +41,11 @@ class Input extends React.PureComponent<InputProps> {
 	}
 
 	render() {
-		const { CustomComponent, myRef, ...restProps } = this.props
+		const { CustomComponent, forwardRed, ...restProps } = this.props
 
 		return (
 			<Root
-				ref={myRef}
+				ref={forwardRed}
 				as={CustomComponent}
 				{...restProps}
 				onKeyDown={this.onKeyDownHd}
