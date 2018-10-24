@@ -4,7 +4,7 @@ import { ArrowDown } from 'components/Icon'
 import Indicator, { RotateIndicator } from 'components/Indicator'
 import { Option, Indicators, Input, Options, InputWrapper } from 'components'
 
-import Root from './styles'
+import Root from './Select.styles'
 import { SelectProps, SelectState } from './Select.d'
 
 class Select extends React.PureComponent<SelectProps, SelectState> {

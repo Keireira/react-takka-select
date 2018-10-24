@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import Root from './styles'
+import Root from './Option.styles'
 import { OptionProps } from './Option.d'
 
 class Option extends React.PureComponent<OptionProps> {
