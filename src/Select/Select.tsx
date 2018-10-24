@@ -5,7 +5,8 @@ import Indicator, { RotateIndicator } from 'components/Indicator'
 import { Option, Indicators, Input, Options, InputWrapper } from 'components'
 
 import Root from './Select.styles'
-import { SelectProps, SelectState } from './Select.d'
+import { getNextFocusId } from './Select.utils'
+import { SelectProps, SelectState, FocusId } from './Select.d'
 
 class Select extends React.PureComponent<SelectProps, SelectState> {
 	static defaultProps = {
@@ -20,54 +21,57 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 		currentFocusId: 0,
 	}
 
+	input: any = React.createRef()
+
+	dropFocus = () => {
+		this.input.current.blur()
+	}
+
 	hideOptions = (): void => this.setState({ isOpened: false })
 
 	showOptions = (): void => this.setState({ isOpened: true })
 
-	setCurrentFocusId = (nextFocusId: string | number): void => {
-		const minLength = 0
+	setCurrentFocusId = (nextFocusId: FocusId): void => {
 		const maxLength = this.props.options.length - 1
 
-		const getNextFocusId = () => {
-			if (nextFocusId > maxLength) return minLength
-
-			if (nextFocusId < minLength) return maxLength
-
-			return nextFocusId
-		}
-
 		this.setState({
-			currentFocusId: getNextFocusId(),
+			currentFocusId: getNextFocusId(nextFocusId, maxLength),
 		})
 	}
 
-	selectCurrentOptionById = (): void => {
-		const { options, onSelect, valueKey } = this.props
+	selectCurrentOptionById = (forcedOptionId?: FocusId): void => {
+		const { options, valueKey } = this.props
 		const { currentFocusId } = this.state
 
-		const findedOption = options.find((option) => option[valueKey] === currentFocusId)
+		const realFocusId = forcedOptionId || currentFocusId
+		const findedOption = options.find((option) => option[valueKey] === realFocusId)
 
-		onSelect(findedOption)
+		this.props.onSelect(findedOption)
+
+		this.dropFocus()
 	}
 
 	render() {
-		const { isForcedOpened, options, valueKey, labelKey, isLoading, onSelect, isSearchable, components } = this.props
+		const { isForcedOpened, options, valueKey, labelKey, isLoading, isSearchable, components } = this.props
 		const { isOpened, currentFocusId } = this.state
 
 		return (
 			<Root>
 				<InputWrapper>
 					<Input
-						onFocus={this.showOptions}
-						onBlur={this.hideOptions}
-						value={this.props.value[labelKey]}
-						readOnly={!isSearchable}
+						myRef={this.input}
 						isOpened={isOpened}
+						dropFocus={this.dropFocus}
 						CustomComponent={components.input}
 
 						currentFocusId={currentFocusId}
 						setCurrentFocusId={this.setCurrentFocusId}
 						selectCurrentOptionById={this.selectCurrentOptionById}
+
+						readOnly={!isSearchable}
+						onBlur={this.hideOptions}
+						onFocus={this.showOptions}
+						value={this.props.value[labelKey]}
 					/>
 
 					<Indicators CustomComponent={components.indicators}>
@@ -86,17 +90,17 @@ class Select extends React.PureComponent<SelectProps, SelectState> {
 				{((typeof isForcedOpened === 'boolean') ? isForcedOpened : isOpened) && (
 					<Options>
 						{options.map((option) => {
-							const isActive = option[valueKey] === currentFocusId
+							const value = option[valueKey]
+							const isActive = (value === currentFocusId)
 
 							return (
 								<Option
-									key={option[valueKey]}
-									isActive={isActive}
-									onSelect={onSelect}
-									options={options}
-									labelKey={labelKey}
+									key={value}
 									CustomComponent={components.option}
-									optionFocusId={option[valueKey]}
+									onSelect={this.selectCurrentOptionById}
+
+									isActive={isActive}
+									optionFocusId={value}
 									setCurrentFocusId={this.setCurrentFocusId}
 								>
 									{option[labelKey]}

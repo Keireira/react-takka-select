@@ -1,14 +1,12 @@
-type Option = {
-	[key: string]: any;
-}
+import { FocusId } from 'Select/Select.d'
 
 export interface OptionProps {
-	children: JSX.Element | string | number | Element[] | JSX.Element[];
-	optionFocusId: string | number;
-	onSelect: (finded: Option) => void;
-	options: Option[];
-	labelKey: string;
+	children?: JSX.Element | string | number | Element[] | JSX.Element[];
 	CustomComponent?: React.ReactType | keyof JSX.IntrinsicElements;
-	setCurrentFocusId: (nextFocusId: string | number) => void;
+
 	isActive: boolean;
+
+	optionFocusId: FocusId;
+	onSelect: (forcedFocusId: FocusId) => void;
+	setCurrentFocusId: (nextFocusId: FocusId) => void;
 }

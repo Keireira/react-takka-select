@@ -4,22 +4,17 @@ import Root from './Option.styles'
 import { OptionProps } from './Option.d'
 
 class Option extends React.PureComponent<OptionProps> {
-	onSelectHd = (event): void => {
-		const { onSelect, options, labelKey } = this.props
+	onSelectHd = (): void => {
+		const { onSelect, optionFocusId } = this.props
 
-		if (typeof onSelect === 'function') {
-			const finded = options.find((option) => option[labelKey] === event.target.innerText)
-
-			onSelect(finded)
-		}
+		this.setFocusId()
+		onSelect(optionFocusId)
 	}
 
-	onMouseEnter = () => {
+	setFocusId = (): void => {
 		const { setCurrentFocusId, optionFocusId } = this.props
 
-		if (typeof setCurrentFocusId === 'function') {
-			setCurrentFocusId(optionFocusId)
-		}
+		setCurrentFocusId(optionFocusId)
 	}
 
 	render() {
@@ -27,10 +22,11 @@ class Option extends React.PureComponent<OptionProps> {
 
 		return (
 			<Root
-				as={CustomComponent}
-				onMouseDown={this.onSelectHd}
-				onMouseEnter={this.onMouseEnter}
 				isActive={isActive}
+				as={CustomComponent}
+
+				onMouseDown={this.onSelectHd}
+				onMouseEnter={this.setFocusId}
 			>
 				{children}
 			</Root>
