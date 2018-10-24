@@ -27,11 +27,6 @@ class App extends React.PureComponent {
 					options={options}
 					onSelect={this.onSelect}
 					isSearchable={false}
-					// components={{
-					// 	option: Option,
-					// 	indicators: Indicators,
-					// 	input: Input,
-					// }}
 				/>
 			</div>
 		)
