@@ -8,8 +8,8 @@
 		"build": "react-scripts build"
 	},
 	"dependencies": {
-		"react": "^16.5.2",
-		"react-dom": "^16.5.2",
+		"react": "^16.6.0",
+		"react-dom": "^16.6.0",
 		"react-scripts": "^2.0.5",
 		"react-takka-select": "link:..",
 		"styled-components": "4.0.1"
