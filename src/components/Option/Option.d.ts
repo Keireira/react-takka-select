@@ -1,12 +1,12 @@
+import { SFC } from 'react'
 import { FocusId } from 'Select/Select.d'
 
 export interface OptionProps {
-	children?: JSX.Element | string | number | Element[] | JSX.Element[];
+	children?: React.ReactNode;
 	CustomComponent?: React.ReactType | keyof JSX.IntrinsicElements;
 
 	isActive: boolean;
 
 	optionFocusId: FocusId;
 	onSelect: (forcedFocusId: FocusId) => void;
-	setCurrentFocusId: (nextFocusId: FocusId) => void;
 }

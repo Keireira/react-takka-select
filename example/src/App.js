@@ -11,7 +11,7 @@ const options = [
 
 class App extends React.PureComponent {
 	state = {
-		value: options[0],
+		value: options[2],
 	}
 
 	onSelect = (value) => {
