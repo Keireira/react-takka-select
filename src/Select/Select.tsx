@@ -2,9 +2,8 @@ import * as React from 'react'
 
 import { SelectProvider } from 'context'
 
-import { ArrowDown } from 'components/Icon'
 import Indicator, { RotateIndicator } from 'components/Indicator'
-import { Option, Indicators, Input, Options, InputWrapper, SelectBody } from 'components'
+import { Icon, Option, Indicators, Input, Options, InputWrapper, SelectBody } from 'components'
 
 import { Props, FocusId } from './Select.d'
 import { getNextFocusId } from './Select.utils'
@@ -90,7 +89,7 @@ class Select extends React.PureComponent<Props, State> {
 							)}
 
 							<RotateIndicator isActive={isOpened}>
-								<ArrowDown/>
+								<Icon name="arrow-down"/>
 							</RotateIndicator>
 						</Indicators>
 					</InputWrapper>
