@@ -90,7 +90,7 @@ class Select extends React.PureComponent<Props, State> {
 							)}
 
 							<RotateIndicator isActive={isOpened}>
-								<ArrowDown/>
+								<ArrowDown name="arrow-down"/>
 							</RotateIndicator>
 						</Indicators>
 					</InputWrapper>

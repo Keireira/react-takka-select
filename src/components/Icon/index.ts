@@ -1,1 +1,1 @@
-export { ReactComponent as ArrowDown } from './assets/arrow-down.svg'
+export { default as ArrowDown } from './Icon'
