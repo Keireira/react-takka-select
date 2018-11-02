@@ -3,14 +3,14 @@ import * as React from 'react'
 import Root from './InputWrapper.styles'
 import { InputWrapperProps } from './InputWrapper.d'
 
-class InputWrapper extends React.PureComponent<InputWrapperProps> {
-	render() {
-		const { children, CustomComponent, ...restProps } = this.props
 
-		return (
-			<Root as={CustomComponent} {...restProps}>{children}</Root>
-		)
-	}
-}
+const InputWrapper = React.forwardRef((props: InputWrapperProps, ref) => {
+	const { children, CustomComponent, ...restProps } = props
+
+	return (
+		// @ts-ignore
+		<Root as={CustomComponent} ref={ref} {...restProps}>{children}</Root>
+	)
+})
 
 export default InputWrapper

@@ -82,11 +82,9 @@ class Select extends React.PureComponent<Props, State> {
 						/>
 
 						<Indicators CustomComponent={components.indicators}>
-							{(isLoading) && (
-								<Indicator>
-									...
-								</Indicator>
-							)}
+							<Indicator>
+								<Icon name="clear"/>
+							</Indicator>
 
 							<RotateIndicator isActive={isOpened}>
 								<Icon name="arrow-down"/>
