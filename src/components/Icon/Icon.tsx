@@ -1,23 +1,18 @@
 import * as React from 'react'
+import { toPascalCase } from '@helpers'
 
 import * as Icons from './assets'
 
-const formatName = (source: string): string => {
-	return source.split('-').map((word) => {
-		const firstLetter = word.charAt(0).toUpperCase()
-		const restLetters = word.slice(1).toLowerCase()
-
-		return `${firstLetter}${restLetters}`
-	}).join('')
-}
-
 // @ts-ignore
-const ArrowDown = React.memo(({ name, ...restProps }) => {
-	const test = formatName(name)
+const Icon = React.memo(({ name, ...restProps }) => {
+	const iconName = toPascalCase(name)
+	const FindedIcon = Icons[iconName]
 
-	const Icon = Icons[test]
+	if (FindedIcon) {
+		return <FindedIcon {...restProps}/>
+	}
 
-	return Icon ? <Icon {...restProps}/> : null
+	return null
 })
 
-export default ArrowDown
+export default Icon
