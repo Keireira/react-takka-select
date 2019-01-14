@@ -3,8 +3,12 @@ import { toPascalCase } from '@helpers'
 
 import * as Icons from './assets'
 
+type Props = {
+	name: string;
+}
+
 // @ts-ignore
-const Icon = React.memo(({ name, ...restProps }) => {
+const Icon = React.memo(({ name, ...restProps }: Props) => {
 	const iconName = toPascalCase(name)
 	const FindedIcon = Icons[iconName]
 

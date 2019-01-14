@@ -10,6 +10,7 @@ import { getNextFocusId } from './Select.utils'
 
 const initialState = {
 	isOpened: false,
+	isInside: false,
 	currentFocusId: 0,
 }
 
@@ -24,6 +25,7 @@ class Select extends React.PureComponent<Props, State> {
 	};
 
 	readonly state: State = initialState;
+	lastEvent: string[] = [];
 
 	input: any = React.createRef();
 
@@ -33,17 +35,31 @@ class Select extends React.PureComponent<Props, State> {
 		return {
 			isOpened,
 			currentFocusId,
+
 			dropFocus: this.dropFocus,
 			setCurrentFocusId: this.setCurrentFocusId,
 			selectCurrentOptionById: this.selectCurrentOptionById,
 		}
 	};
+	dropFocus = () => {
+		this.input.current.blur()
+	};
 
-	dropFocus = () => this.input.current.blur();
+	setFocus = () => {
+		this.input.current.focus()
+	};
 
-	hideOptions = () => this.setState({ isOpened: false });
+	hideOptions = () => {
+		this.setState({ isOpened: false })
+	};
 
-	showOptions = () => this.setState({ isOpened: true });
+	showOptions = () => {
+		this.setState({ isOpened: true })
+	}
+
+	closeByIconHd = () => {
+
+	}
 
 	setCurrentFocusId = (nextFocusId: FocusId) => {
 		const maxLength = this.props.options.length - 1
@@ -64,7 +80,7 @@ class Select extends React.PureComponent<Props, State> {
 	};
 
 	render() {
-		const { isForcedOpened, options, valueKey, labelKey, isLoading, isSearchable, components } = this.props
+		const { isForcedOpened, options, valueKey, labelKey, isSearchable, components } = this.props
 		const { isOpened, currentFocusId } = this.state
 
 		return (
@@ -86,7 +102,7 @@ class Select extends React.PureComponent<Props, State> {
 								<Icon name="clear"/>
 							</Indicator>
 
-							<RotateIndicator isActive={isOpened}>
+							<RotateIndicator isActive={isOpened} onClick={this.closeByIconHd}>
 								<Icon name="arrow-down"/>
 							</RotateIndicator>
 						</Indicators>

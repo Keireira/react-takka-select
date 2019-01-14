@@ -8,7 +8,7 @@ import { SelectConsumer } from 'context'
 const [ESCAPE, TAB, ENTER, SPACE, UP, DOWN] = [27, 9, 13, 32, 38, 40]
 
 class Input extends React.PureComponent<InputProps> {
-	static contextType = SelectConsumer;
+	static contextType: any = SelectConsumer;
 
 	onKeyDownHd = ({ keyCode }) => {
 		const { isOpened, dropFocus } = this.context

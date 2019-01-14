@@ -7,7 +7,7 @@ import { OptionProps } from './Option.d'
 
 
 class Option extends React.PureComponent<OptionProps> {
-	static contextType = SelectConsumer;
+	static contextType: any = SelectConsumer;
 
 	onSelectHd = (): void => {
 		const { onSelect, optionFocusId } = this.props
