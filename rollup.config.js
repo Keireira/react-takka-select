@@ -34,8 +34,8 @@ export default {
 			browser: true,
 		}),
 		typescript({
-			rollupCommonJSResolveHack: true,
 			clean: true,
+			check: false,
 		}),
 		commonjs(),
 	],
