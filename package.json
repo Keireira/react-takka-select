@@ -1,6 +1,6 @@
 {
 	"name": "react-takka-select",
-	"version": "1.1.7",
+	"version": "1.1.8",
 	"scripts": {
 		"start": "rollup -c -w",
 		"build": "rollup -c"
@@ -8,7 +8,7 @@
 	"author": {
 		"name": "Alena Dzhukich",
 		"email": "github@alena.moe",
-		"url": "https://alena.moe"
+		"url": "https://alena.red/"
 	},
 	"license": "UNLICENSED",
 	"main": "./dist/index.js",
@@ -18,24 +18,27 @@
 		"dist"
 	],
 	"devDependencies": {
-		"@svgr/rollup": "^3.1.0",
-		"@types/react": "^16.4.18",
-		"@types/styled-components": "^4.0.3",
-		"react": "^16.6.0",
-		"react-dom": "^16.6.0",
-		"rollup": "^0.66.6",
+		"@svgr/rollup": "^4.1.0",
+		"@types/react": "^16.7.20",
+		"@types/react-dom": "^16.0.11",
+		"@types/styled-components": "^4.1.6",
+		"rollup": "^1.1.2",
 		"rollup-plugin-commonjs": "^9.2.0",
-		"rollup-plugin-node-resolve": "^3.4.0",
+		"rollup-plugin-node-resolve": "^4.0.0",
 		"rollup-plugin-peer-deps-external": "^2.2.0",
 		"rollup-plugin-postcss-modules": "^1.0.10",
-		"rollup-plugin-typescript2": "^0.17.2",
-		"rollup-plugin-url": "^2.0.1",
-		"styled-components": "^4.0.3",
+		"rollup-plugin-typescript2": "^0.19.2",
+		"rollup-plugin-url": "^2.1.0",
+		"styled-components": "^4.1.3",
 		"tslib": "^1.9.3",
-		"typescript": "^3.1.6"
+		"typescript": "^3.2.4"
 	},
 	"peerDependencies": {
-		"react": "16.x.x",
+		"react": "16.8.x",
 		"styled-components": "4.x.x"
+	},
+	"dependencies": {
+		"react": "^16.8.0-alpha.1",
+		"react-dom": "^16.8.0-alpha.1"
 	}
 }

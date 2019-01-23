@@ -1,43 +1,50 @@
 import * as React from 'react'
 
-import { SelectConsumer } from 'context'
-
-import Root from './Option.styles'
 import { OptionProps } from './Option.d'
-
+import StyledOption from './Option.styles'
+import { SelectConsumer } from '../../context'
 
 class Option extends React.PureComponent<OptionProps> {
-	static contextType = SelectConsumer;
+	static contextType: any = SelectConsumer;
 
-	onSelectHd = (): void => {
-		const { onSelect, optionFocusId } = this.props
-
-		this.setFocusId()
-		onSelect(optionFocusId)
-		this.context.dropFocus()
+	focusOption = () => {
+		this.context.focusOption(this.props.value)
 	};
 
-	setFocusId = (): void => {
-		const { optionFocusId } = this.props
-
-		this.context.setCurrentFocusId(optionFocusId)
-	};
+	selectOption = () => {
+		this.context.selectOption()
+	}
 
 	render() {
-		const { children, CustomComponent, isActive } = this.props
+		const { isActive, children } = this.props
 
 		return (
-			<Root
+			<StyledOption
 				isActive={isActive}
-				as={CustomComponent}
-
-				onMouseDown={this.onSelectHd}
-				onMouseEnter={this.setFocusId}
+				onMouseEnter={this.focusOption}
+				onMouseDown={this.selectOption}
 			>
 				{children}
-			</Root>
+			</StyledOption>
 		)
-	};
+	}
 }
+
+// TODO: Migrate to useContext hook after fixing rerender problems
+// https://github.com/facebook/react/issues/14110
+
+// const Option = ({ isActive, children, value }: OptionProps) => {
+// 	const { selectOption, focusOption } = React.useContext(Context)
+
+// 	return (
+// 		<StyledOption
+// 			isActive={isActive}
+// 			onMouseDown={() => selectOption()}
+// 			onMouseEnter={() => focusOption(value)}
+// 		>
+// 			{children}
+// 		</StyledOption>
+// 	)
+// }
 
 export default Option

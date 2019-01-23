@@ -1,14 +1,14 @@
 import * as React from 'react'
 
-const SelectContext = React.createContext({
-	isOpened: undefined,
-	currentFocusId: undefined,
+const noop = () => {}
 
-	dropFocus: undefined,
-	setCurrentFocusId: undefined,
-	selectCurrentOptionById: undefined,
+const SelectContext = React.createContext({
+	focusOption: noop,
+	selectOption: noop,
 })
 
 export const SelectProvider = SelectContext.Provider
 export const SelectConsumer = SelectContext.Consumer
+
+export default SelectContext
 

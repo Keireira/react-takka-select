@@ -34,8 +34,9 @@ export default {
 			browser: true,
 		}),
 		typescript({
-			rollupCommonJSResolveHack: true,
 			clean: true,
+			check: false,
+			module: 'ES2015',
 		}),
 		commonjs(),
 	],

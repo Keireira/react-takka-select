@@ -1,20 +1,29 @@
-import styled from 'styled-components'
+import * as React from 'react'
+
+import Icon from '../Icon'
+
 import { IndicatorProps } from './Indicator.d'
+import { DefaultIndicator, RotateIndicator } from './Indicator.styles'
 
-const Indicator = styled.div`
-	width: 40px;
-	height: 40px;
 
-	display: flex;
-	align-items: center;
-	justify-content: center;
+const components = {
+	rotate: RotateIndicator,
+	default: DefaultIndicator,
+}
 
-	fill: #2f3640;
-`
+const Indicator = ({ name, isActive, type, ...restProps }: IndicatorProps) => {
+	const Component = components[type] || components.default
 
-export const RotateIndicator = styled(Indicator)<IndicatorProps>`
-	transition: transform 0.2s ease-in-out;
-	transform: ${(props) => props.isActive ? 'rotate(180deg)' : ''};
-`
+	return (
+		<Component isActive={isActive} {...restProps}>
+			<Icon name={name}/>
+		</Component>
+	)
+}
 
-export default Indicator
+Indicator.defaultProps = {
+	isActive: false,
+	type: 'default',
+}
+
+export default React.memo(Indicator)
