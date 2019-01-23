@@ -2,17 +2,18 @@ import * as React from 'react'
 import { toPascalCase } from '@helpers'
 
 import * as Icons from './assets'
+import { IconProps } from './Icon.d'
+import StyledIcon from './Icon.styles'
 
-// @ts-ignore
-const Icon = React.memo(({ name, ...restProps }) => {
+const Icon = ({ name, ...restProps }: IconProps) => {
 	const iconName = toPascalCase(name)
 	const FindedIcon = Icons[iconName]
 
 	if (FindedIcon) {
-		return <FindedIcon {...restProps}/>
+		return <StyledIcon as={FindedIcon} {...restProps}/>
 	}
 
 	return null
-})
+}
 
 export default Icon

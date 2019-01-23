@@ -1,1 +1,1 @@
-export { default, RotateIndicator } from './Indicator'
+export { default } from './Indicator'

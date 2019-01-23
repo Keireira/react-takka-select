@@ -2,6 +2,8 @@ import * as React from 'react'
 
 import Select from 'react-takka-select'
 
+
+// @TODO: Добавить поддержку строковых ID
 const options = [
 	{ id: 0, label: 'The quick' },
 	{ id: 1, label: 'Brown Fox' },
@@ -27,6 +29,7 @@ class App extends React.PureComponent {
 					options={options}
 					onSelect={this.onSelect}
 					isSearchable={false}
+					isClearable={true}
 				/>
 			</div>
 		)

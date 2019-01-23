@@ -1,12 +1,10 @@
-import { SFC } from 'react'
-import { FocusId } from 'Select/Select.d'
+import * as React from 'react'
 
-export interface OptionProps {
-	children?: React.ReactNode;
-	CustomComponent?: React.ReactType | keyof JSX.IntrinsicElements;
-
+export type OptionStyledProps = {
 	isActive: boolean;
-
-	optionFocusId: FocusId;
-	onSelect: (forcedFocusId: FocusId) => void;
 }
+
+export type OptionProps = OptionStyledProps & {
+	children: any;
+	value: string | number;
+} & React.HTMLAttributes<{}>

@@ -1,123 +1,206 @@
 import * as React from 'react'
 
-import { SelectProvider } from 'context'
+import { SelectProvider } from '../context'
+import { Option, Indicator } from '../components'
+import { Body, InputWrapepr, Input, Options, Indicators } from './Select.styles'
 
-import Indicator, { RotateIndicator } from 'components/Indicator'
-import { Icon, Option, Indicators, Input, Options, InputWrapper, SelectBody } from 'components'
+const [ESCAPE, TAB, ENTER, SPACE, UP, DOWN, BACKSPACE] = [27, 9, 13, 32, 38, 40, 8]
 
-import { Props, FocusId } from './Select.d'
-import { getNextFocusId } from './Select.utils'
+const forcedBlur = () => {
+	const element = document.activeElement as HTMLInputElement;
 
-const initialState = {
-	isOpened: false,
-	currentFocusId: 0,
-}
+	if (element.type === 'text') {
+		element.blur()
+	}
+};
 
-type State = Readonly<typeof initialState>
-
-class Select extends React.PureComponent<Props, State> {
+class Select extends React.Component {
 	static defaultProps = {
+		isClearable: true,
+		isSearchable: false,
 		valueKey: 'value',
 		labelKey: 'label',
-		components: {},
 		options: [],
-	};
+	}
 
-	readonly state: State = initialState;
+	state = {
+		isOpened: false,
+		isFocused: false,
+		currentFocusId: 0,
+	}
 
-	input: any = React.createRef();
+	componentDidMount() {
+		document.addEventListener('mousedown', this.clickOutsideHd)
+		window.addEventListener('keydown', this.onKeyDownHd)
+	}
 
-	get contextProps() {
-		const { isOpened, currentFocusId } = this.state
+	componentWillUnmount() {
+		document.removeEventListener('mousedown', this.clickOutsideHd)
+		window.removeEventListener('keydown', this.onKeyDownHd)
+	}
 
+	wrapper: React.RefObject<any> = React.createRef();
+
+	getContext = () => {
 		return {
-			isOpened,
-			currentFocusId,
-			dropFocus: this.dropFocus,
-			setCurrentFocusId: this.setCurrentFocusId,
-			selectCurrentOptionById: this.selectCurrentOptionById,
+			focusOption: this.focusOption,
+			selectOption: this.selectOption,
 		}
 	};
 
-	dropFocus = () => this.input.current.blur();
-
-	hideOptions = () => this.setState({ isOpened: false });
-
-	showOptions = () => this.setState({ isOpened: true });
-
-	setCurrentFocusId = (nextFocusId: FocusId) => {
-		const maxLength = this.props.options.length - 1
-
-		this.setState({
-			currentFocusId: getNextFocusId(nextFocusId, maxLength),
-		})
+	toggleMenu = () => {
+		this.setState((prevState) => ({
+			isOpened: !prevState.isOpened,
+		}))
 	};
 
-	selectCurrentOptionById = (forcedOptionId?: FocusId) => {
-		const { options, valueKey } = this.props
+	closeOptions = () => {
+		this.setState({ isOpened: false, isFocused: false }, forcedBlur)
+	}
+
+	clickOutsideHd = (event: MouseEvent) => {
+		const { current } = this.wrapper
+
+		if (current && !current.contains(event.target)) {
+			this.setState({ isOpened: false })
+		}
+	};
+
+	selectOption = (forcedFocusId?: string | number) => {
+		const { options, valueKey, onSelect } = this.props
 		const { currentFocusId } = this.state
 
-		const realFocusId = forcedOptionId || currentFocusId
-		const findedOption = options.find((option) => option[valueKey] === realFocusId)
+		const realFocusId = forcedFocusId || currentFocusId
+		const findedItem = options.find((option) => option[valueKey] === realFocusId)
 
-		this.props.onSelect(findedOption)
+		if (typeof onSelect === 'function') {
+			onSelect(findedItem)
+
+			this.closeOptions()
+		}
+	}
+
+	onKeyDownHd = ({ keyCode }: KeyboardEvent) => {
+		const { isOpened, currentFocusId } = this.state
+
+		if (!isOpened) return
+
+		switch (keyCode) {
+			case ESCAPE: return this.closeOptions()
+
+			case BACKSPACE: {
+				if (!this.props.isSearchable) {
+					this.clearInput()
+				}
+
+				break
+			}
+
+			// case TAB:
+			case ENTER:
+			case SPACE: {
+				this.focusOption(currentFocusId)
+				this.selectOption(currentFocusId)
+
+				break
+			}
+
+			case UP: return this.focusOption(this.getNextFocusId(-1))
+
+			case DOWN: return this.focusOption(this.getNextFocusId(1))
+
+			default: return undefined
+		}
 	};
 
+	clearInput = () => {
+		const { onSelect } = this.props
+
+		if (typeof onSelect === 'function') {
+			onSelect(undefined)
+
+			this.setState({ isOpened: true })
+		}
+	}
+
+	onFocusHd = () => {
+		this.setState({ isOpened: true, isFocused: true })
+	};
+
+	onBlurHd = () => {
+		this.setState({ isFocused: false })
+	}
+
+	onInputHd = () => {
+		this.setState({ isOpened: true })
+	};
+
+	getNextFocusId = (shift: number): number => {
+		const { length: total } = this.props.options
+		const { currentFocusId } = this.state
+
+		return (total + currentFocusId + shift) % total
+	};
+
+	focusOption = (nextFocusId: number) => {
+		this.setState({
+			currentFocusId: nextFocusId,
+		})
+	}
+
+	onOptionSelectHd = () => {
+		this.selectOption()
+	}
+
+	setFocusId = (nextFocusId) => {
+		this.focusOption(nextFocusId)
+	}
+
 	render() {
-		const { isForcedOpened, options, valueKey, labelKey, isLoading, isSearchable, components } = this.props
+		const { options, valueKey, labelKey, isSearchable, isClearable } = this.props
 		const { isOpened, currentFocusId } = this.state
 
 		return (
-			<SelectProvider value={this.contextProps}>
-				<SelectBody>
-					<InputWrapper>
+			<SelectProvider value={this.getContext()}>
+				<Body ref={this.wrapper}>
+					<InputWrapepr>
 						<Input
-							forwardRed={this.input}
-							CustomComponent={components.input}
-
+							type="text"
+							tabIndex={1}
+							value={this.props.value ? this.props.value[labelKey] : ''}
+							onFocus={this.onFocusHd}
+							onBlur={this.onBlurHd}
+							onChange={this.onInputHd}
 							readOnly={!isSearchable}
-							onBlur={this.hideOptions}
-							onFocus={this.showOptions}
-							value={this.props.value[labelKey]}
 						/>
 
-						<Indicators CustomComponent={components.indicators}>
-							{(isLoading) && (
-								<Indicator>
-									...
-								</Indicator>
+						<Indicators>
+							{isClearable && (
+								<Indicator name="clear" onMouseUp={this.clearInput}/>
 							)}
 
-							<RotateIndicator isActive={isOpened}>
-								<Icon name="arrow-down"/>
-							</RotateIndicator>
+							<Indicator name="arrow-down" isActive={isOpened} onMouseUp={this.toggleMenu}/>
 						</Indicators>
-					</InputWrapper>
+					</InputWrapepr>
 
-					{((typeof isForcedOpened === 'boolean') ? isForcedOpened : isOpened) && (
+					{isOpened && (
 						<Options>
 							{options.map((option) => {
 								const value = option[valueKey]
+								const isActive = (value === currentFocusId)
 
 								return (
-									<Option
-										key={value}
-										optionFocusId={value}
-										isActive={value === currentFocusId}
-
-										CustomComponent={components.option}
-										onSelect={this.selectCurrentOptionById}
-									>
+									<Option key={value} value={value} isActive={isActive}>
 										{option[labelKey]}
 									</Option>
-								)
-							})}
+								)}
+							)}
 						</Options>
 					)}
-				</SelectBody>
+				</Body>
 			</SelectProvider>
 		)
-	};
+	}
 }
 
 export default Select

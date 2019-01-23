@@ -1,19 +1,23 @@
 # This package is under development!
 
-| Prop | default value | description |
-|------|---------------|-------------|
-| isForcedOpened | undefined | — |
+| Prop           | Default value | Description |
+|----------------|---------------|-------------|
+| isClearable    | true          | — |
+| isSearchable   | false         | — |
+| valueKey       | 'value'       | — |
+| labelKey       | 'label'       | — |
+| options        | []            | — |
+| value          | undefined     | — |
+| onSelect       | () => {}      | — |
+
 
 ## Roadmap:
 
-- [x] Bootstrap project, setup publish proccess
-- [ ] Add default select without any gimmicks
-- [ ] Styled Components integration
-- [ ] Fuzzy search
-- [ ] Clearing
+- [ ] Refactoring
+- [ ] Fix type errors
 - [ ] Loader
-- [ ] Default options
-- [ ] ???
+- [ ] Fuzzy search
+- [ ] Styling with CSSM & SC
 
 
 ## License

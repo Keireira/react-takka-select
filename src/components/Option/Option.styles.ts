@@ -1,11 +1,15 @@
 import styled from 'styled-components'
 
-export default styled.li<{ isActive: boolean }>`
+import { OptionStyledProps } from './Option.d'
+
+export default styled.li<OptionStyledProps>`
 	list-style: none;
 	padding: 20px;
 
 	cursor: pointer;
 	transition: background 0.15s ease;
+
+	${(props) => props.isActive ? 'background-color: #f4f4f4;' : ''}
 
 	&:first-child {
 		border-top-left-radius: 2px;
@@ -16,6 +20,4 @@ export default styled.li<{ isActive: boolean }>`
 		border-bottom-left-radius: 2px;
 		border-bottom-right-radius: 2px;
 	}
-
-	${(props) => props.isActive ? 'background-color: #f4f4f4;' : ''}
 `
