@@ -1,8 +1,10 @@
 import * as React from 'react'
 
+const noop = () => {}
+
 const SelectContext = React.createContext({
-	focusOption: undefined,
-	selectOption: undefined,
+	focusOption: noop,
+	selectOption: noop,
 })
 
 export const SelectProvider = SelectContext.Provider

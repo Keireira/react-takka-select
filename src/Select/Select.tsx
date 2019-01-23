@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-import { Icon, Option } from '../components'
 import { SelectProvider } from '../context'
-import { Body, InputWrapepr, Input, Options, Indicators, Indicator, RotateIndicator } from './Select.styles'
+import { Option, Indicator } from '../components'
+import { Body, InputWrapepr, Input, Options, Indicators } from './Select.styles'
 
 const [ESCAPE, TAB, ENTER, SPACE, UP, DOWN, BACKSPACE] = [27, 9, 13, 32, 38, 40, 8]
 
@@ -176,14 +176,10 @@ class Select extends React.Component {
 
 						<Indicators>
 							{isClearable && (
-								<Indicator onMouseUp={this.clearInput}>
-									<Icon name="clear"/>
-								</Indicator>
+								<Indicator name="clear" onMouseUp={this.clearInput}/>
 							)}
 
-							<RotateIndicator isActive={isOpened} onMouseUp={this.toggleMenu}>
-								<Icon name="arrow-down"/>
-							</RotateIndicator>
+							<Indicator isActive={isOpened} name="arrow-down" onMouseUp={this.toggleMenu}/>
 						</Indicators>
 					</InputWrapepr>
 
