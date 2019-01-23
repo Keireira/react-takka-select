@@ -6,6 +6,14 @@ import { Body, InputWrapepr, Input, Options, Indicators, Indicator, RotateIndica
 
 const [ESCAPE, TAB, ENTER, SPACE, UP, DOWN, BACKSPACE] = [27, 9, 13, 32, 38, 40, 8]
 
+const forcedBlur = () => {
+	const element = document.activeElement as HTMLInputElement;
+
+	if (element.type === 'text') {
+		element.blur()
+	}
+};
+
 class Select extends React.Component {
 	static defaultProps = {
 		isClearable: true,
@@ -46,6 +54,10 @@ class Select extends React.Component {
 		}))
 	};
 
+	closeOptions = () => {
+		this.setState({ isOpened: false, isFocused: false }, forcedBlur)
+	}
+
 	clickOutsideHd = (event: MouseEvent) => {
 		const { current } = this.wrapper
 
@@ -54,24 +66,19 @@ class Select extends React.Component {
 		}
 	};
 
-	selectOption = () => {
+	selectOption = (forcedFocusId?: string | number) => {
 		const { options, valueKey, onSelect } = this.props
 		const { currentFocusId } = this.state
 
-		const findedItem = options.find((option) => option[valueKey] === currentFocusId)
+		const realFocusId = forcedFocusId || currentFocusId
+		const findedItem = options.find((option) => option[valueKey] === realFocusId)
 
 		if (typeof onSelect === 'function') {
 			onSelect(findedItem)
+
+			this.closeOptions()
 		}
 	}
-
-	forcedBlur = () => {
-		const element = document.activeElement as HTMLInputElement;
-
-		if (element.type === 'text') {
-			element.blur()
-		}
-	};
 
 	onKeyDownHd = ({ keyCode }: KeyboardEvent) => {
 		const { isOpened, currentFocusId } = this.state
@@ -79,11 +86,7 @@ class Select extends React.Component {
 		if (!isOpened) return
 
 		switch (keyCode) {
-			case ESCAPE: {
-				this.setState({ isOpened: false, isFocused: false }, this.forcedBlur)
-
-				break
-			}
+			case ESCAPE: return this.closeOptions()
 
 			case BACKSPACE: {
 				if (!this.props.isSearchable) {
@@ -97,7 +100,7 @@ class Select extends React.Component {
 			case ENTER:
 			case SPACE: {
 				this.focusOption(currentFocusId)
-				this.setState({ isOpened: false }, this.selectOption)
+				this.selectOption(currentFocusId)
 
 				break
 			}

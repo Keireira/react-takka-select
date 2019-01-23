@@ -11,6 +11,10 @@ class Option extends React.PureComponent<OptionProps> {
 		this.context.focusOption(this.props.value)
 	};
 
+	selectOption = () => {
+		this.context.selectOption()
+	}
+
 	render() {
 		const { isActive, children } = this.props
 
@@ -18,7 +22,7 @@ class Option extends React.PureComponent<OptionProps> {
 			<StyledOption
 				isActive={isActive}
 				onMouseEnter={this.focusOption}
-				onMouseDown={this.context.selectOption}
+				onMouseDown={this.selectOption}
 			>
 				{children}
 			</StyledOption>
@@ -35,7 +39,7 @@ class Option extends React.PureComponent<OptionProps> {
 // 	return (
 // 		<StyledOption
 // 			isActive={isActive}
-// 			onMouseDown={selectOption}
+// 			onMouseDown={() => selectOption()}
 // 			onMouseEnter={() => focusOption(value)}
 // 		>
 // 			{children}
