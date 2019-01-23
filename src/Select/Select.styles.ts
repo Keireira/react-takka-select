@@ -40,26 +40,6 @@ export const InputWrapepr = styled.div`
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 `
 
-export const Option = styled.li`
-	list-style: none;
-	padding: 20px;
-
-	cursor: pointer;
-	transition: background 0.15s ease;
-
-	${(props) => props.isActive ? 'background-color: #f4f4f4;' : ''}
-
-	&:first-child {
-		border-top-left-radius: 2px;
-		border-top-right-radius: 2px;
-	}
-
-	&:last-child {
-		border-bottom-left-radius: 2px;
-		border-bottom-right-radius: 2px;
-	}
-`
-
 export const Options = styled.ul`
 	position: absolute;
 	top: calc(100% + 5px);

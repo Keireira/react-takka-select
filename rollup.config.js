@@ -36,6 +36,7 @@ export default {
 		typescript({
 			clean: true,
 			check: false,
+			module: 'ES2015',
 		}),
 		commonjs(),
 	],

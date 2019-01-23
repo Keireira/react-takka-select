@@ -1,7 +1,8 @@
 import * as React from 'react'
 
-import { Icon } from '../components'
-import { Body, InputWrapepr, Input, Options, Option, Indicators, Indicator, RotateIndicator } from './Select.styles'
+import { Icon, Option } from '../components'
+import { SelectProvider } from '../context'
+import { Body, InputWrapepr, Input, Options, Indicators, Indicator, RotateIndicator } from './Select.styles'
 
 const [ESCAPE, TAB, ENTER, SPACE, UP, DOWN, BACKSPACE] = [27, 9, 13, 32, 38, 40, 8]
 
@@ -30,7 +31,14 @@ class Select extends React.Component {
 		window.removeEventListener('keydown', this.onKeyDownHd)
 	}
 
-	wrapper = React.createRef();
+	wrapper: React.RefObject<any> = React.createRef();
+
+	get contextVal() {
+		return {
+			focusOption: this.focusOption,
+			selectOption: this.selectOption,
+		}
+	};
 
 	toggleMenu = () => {
 		this.setState((prevState) => ({
@@ -38,7 +46,7 @@ class Select extends React.Component {
 		}))
 	};
 
-	clickOutsideHd = (event: MouseEvent & { target: EventTarget }) => {
+	clickOutsideHd = (event: MouseEvent) => {
 		const { current } = this.wrapper
 
 		if (current && !current.contains(event.target)) {
@@ -46,7 +54,7 @@ class Select extends React.Component {
 		}
 	};
 
-	selectItem = () => {
+	selectOption = () => {
 		const { options, valueKey, onSelect } = this.props
 		const { currentFocusId } = this.state
 
@@ -88,15 +96,15 @@ class Select extends React.Component {
 			// case TAB:
 			case ENTER:
 			case SPACE: {
-				this.selectOption(currentFocusId)
-				this.setState({ isOpened: false }, this.selectItem)
+				this.focusOption(currentFocusId)
+				this.setState({ isOpened: false }, this.selectOption)
 
 				break
 			}
 
-			case UP: return this.selectOption(this.getNextFocusId(-1))
+			case UP: return this.focusOption(this.getNextFocusId(-1))
 
-			case DOWN: return this.selectOption(this.getNextFocusId(1))
+			case DOWN: return this.focusOption(this.getNextFocusId(1))
 
 			default: return undefined
 		}
@@ -131,18 +139,18 @@ class Select extends React.Component {
 		return (total + currentFocusId + shift) % total
 	};
 
-	selectOption = (nextFocusId: number) => {
+	focusOption = (nextFocusId: number) => {
 		this.setState({
 			currentFocusId: nextFocusId,
 		})
 	}
 
 	onOptionSelectHd = () => {
-		this.selectItem()
+		this.selectOption()
 	}
 
 	setFocusId = (nextFocusId) => {
-		this.selectOption(nextFocusId)
+		this.focusOption(nextFocusId)
 	}
 
 	render() {
@@ -150,50 +158,47 @@ class Select extends React.Component {
 		const { isOpened, currentFocusId } = this.state
 
 		return (
-			<Body ref={this.wrapper}>
-				<InputWrapepr>
-					<Input
-						type="text"
-						tabIndex={1}
-						value={this.props.value ? this.props.value[labelKey] : ''}
-						onFocus={this.onFocusHd}
-						onBlur={this.onBlurHd}
-						onChange={this.onInputHd}
-						readOnly={!isSearchable}
-					/>
+			<SelectProvider value={this.contextVal}>
+				<Body ref={this.wrapper}>
+					<InputWrapepr>
+						<Input
+							type="text"
+							tabIndex={1}
+							value={this.props.value ? this.props.value[labelKey] : ''}
+							onFocus={this.onFocusHd}
+							onBlur={this.onBlurHd}
+							onChange={this.onInputHd}
+							readOnly={!isSearchable}
+						/>
 
-					<Indicators>
-						{isClearable && (
-							<Indicator onMouseUp={this.clearInput}>
-								<Icon name="clear"/>
-							</Indicator>
-						)}
-
-						<RotateIndicator isActive={isOpened} onMouseUp={this.toggleMenu}>
-							<Icon name="arrow-down"/>
-						</RotateIndicator>
-					</Indicators>
-				</InputWrapepr>
-
-				{isOpened && (
-					<Options>
-						{options.map((option) => {
-							const value = option[valueKey]
-
-							return (
-								<Option
-									key={value}
-									isActive={value === currentFocusId}
-									onMouseDown={this.onOptionSelectHd}
-									onMouseEnter={() => this.setFocusId(value) }
-								>
-									{option[labelKey]}
-								</Option>
+						<Indicators>
+							{isClearable && (
+								<Indicator onMouseUp={this.clearInput}>
+									<Icon name="clear"/>
+								</Indicator>
 							)}
-						)}
-					</Options>
-				)}
-			</Body>
+
+							<RotateIndicator isActive={isOpened} onMouseUp={this.toggleMenu}>
+								<Icon name="arrow-down"/>
+							</RotateIndicator>
+						</Indicators>
+					</InputWrapepr>
+
+					{isOpened && (
+						<Options>
+							{options.map((option) => {
+								const value = option[valueKey]
+
+								return (
+									<Option key={value} value={value} isActive={value === currentFocusId}>
+										{option[labelKey]}
+									</Option>
+								)}
+							)}
+						</Options>
+					)}
+				</Body>
+			</SelectProvider>
 		)
 	}
 }
