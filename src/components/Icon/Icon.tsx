@@ -2,13 +2,10 @@ import * as React from 'react'
 import { toPascalCase } from '@helpers'
 
 import * as Icons from './assets'
+import { IconProps } from './Icon.d'
 import StyledIcon from './Icon.styles'
 
-type Props = {
-	name: string;
-}
-
-const Icon = ({ name, ...restProps }: Props) => {
+const Icon = ({ name, ...restProps }: IconProps) => {
 	const iconName = toPascalCase(name)
 	const FindedIcon = Icons[iconName]
 

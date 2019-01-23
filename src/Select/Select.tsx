@@ -41,7 +41,7 @@ class Select extends React.Component {
 
 	wrapper: React.RefObject<any> = React.createRef();
 
-	get contextVal() {
+	getContext = () => {
 		return {
 			focusOption: this.focusOption,
 			selectOption: this.selectOption,
@@ -161,7 +161,7 @@ class Select extends React.Component {
 		const { isOpened, currentFocusId } = this.state
 
 		return (
-			<SelectProvider value={this.contextVal}>
+			<SelectProvider value={this.getContext()}>
 				<Body ref={this.wrapper}>
 					<InputWrapepr>
 						<Input
@@ -179,7 +179,7 @@ class Select extends React.Component {
 								<Indicator name="clear" onMouseUp={this.clearInput}/>
 							)}
 
-							<Indicator isActive={isOpened} name="arrow-down" onMouseUp={this.toggleMenu}/>
+							<Indicator name="arrow-down" isActive={isOpened} onMouseUp={this.toggleMenu}/>
 						</Indicators>
 					</InputWrapepr>
 
@@ -187,9 +187,10 @@ class Select extends React.Component {
 						<Options>
 							{options.map((option) => {
 								const value = option[valueKey]
+								const isActive = (value === currentFocusId)
 
 								return (
-									<Option key={value} value={value} isActive={value === currentFocusId}>
+									<Option key={value} value={value} isActive={isActive}>
 										{option[labelKey]}
 									</Option>
 								)}

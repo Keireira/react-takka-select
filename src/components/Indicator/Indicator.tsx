@@ -14,8 +14,6 @@ const components = {
 const Indicator = ({ name, isActive, type, ...restProps }: IndicatorProps) => {
 	const Component = components[type] || components.default
 
-	console.log('RERENDER', type)
-
 	return (
 		<Component isActive={isActive} {...restProps}>
 			<Icon name={name}/>
