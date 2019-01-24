@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import Icon from '../Icon'
+import Icon from '@local/components/Icon'
 
 import { IndicatorProps } from './Indicator.d'
 import { DefaultIndicator, RotateIndicator } from './Indicator.styles'

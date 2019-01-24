@@ -1,6 +1,6 @@
 {
 	"name": "react-takka-select",
-	"version": "1.1.8",
+	"version": "1.1.12",
 	"scripts": {
 		"start": "rollup -c -w",
 		"build": "rollup -c"
@@ -26,7 +26,6 @@
 		"rollup-plugin-commonjs": "^9.2.0",
 		"rollup-plugin-node-resolve": "^4.0.0",
 		"rollup-plugin-peer-deps-external": "^2.2.0",
-		"rollup-plugin-postcss-modules": "^1.0.10",
 		"rollup-plugin-typescript2": "^0.19.2",
 		"rollup-plugin-url": "^2.1.0",
 		"styled-components": "^4.1.3",
@@ -34,8 +33,8 @@
 		"typescript": "^3.2.4"
 	},
 	"peerDependencies": {
-		"react": "16.8.x",
-		"styled-components": "4.x.x"
+		"react": "^16.6.x",
+		"styled-components": "^4.x.x"
 	},
 	"dependencies": {
 		"react": "^16.8.0-alpha.1",

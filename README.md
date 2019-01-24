@@ -13,10 +13,9 @@
 
 ## Roadmap:
 
-- [ ] Refactoring
 - [ ] Loader
 - [ ] Fuzzy search
-- [ ] Add tests
+- [ ] Tests
 - [ ] Styling with CSSM & SC
 
 
