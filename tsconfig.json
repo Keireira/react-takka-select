@@ -2,20 +2,26 @@
 	"compilerOptions": {
 		"target": "esnext",
 		"module": "esnext",
-		"moduleResolution": "node",
 		"jsx": "react",
 		"allowJs": true,
 		"noEmit": true,
 		"isolatedModules": true,
 		"esModuleInterop": true,
-		"baseUrl": "./src/",
-		"paths": {
 
-		}
+		"moduleResolution": "node",
+
+		"baseUrl": "src",
+		"paths": {
+			"@local/helpers": ["helpers/index"],
+			"@local/helpers/*": ["helpers/*"],
+
+			"@local/components": ["components/index"],
+			"@local/components/*": ["components/*"],
+
+			"@local/constants": ["constants"],
+			"@local/context": ["context"]
+		},
 	},
-	"include": [
-		"src/**/*"
-	],
 	"exclude": [
 		"./node_modules/**/*"
 	]

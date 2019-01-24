@@ -1,19 +1,14 @@
 import * as React from 'react'
 
-import { SelectProvider } from '../context'
-import { Option, Indicator, Input } from '../components'
-import { Body, Options, Indicators } from './Select.styles'
+import { KEYCODES } from '@local/constants'
+import { noop, match, forcedBlur } from '@local/helpers'
+import { Option, Indicator, Input } from '@local/components'
+import { SelectProvider, ContextType } from '@local/context'
+
 import { SelectProps, SelectState } from './Select.d'
+import { Body, Options, Indicators } from './Select.styles'
 
-const [ESCAPE, TAB, ENTER, SPACE, UP, DOWN, BACKSPACE] = [27, 9, 13, 32, 38, 40, 8]
-
-const forcedBlur = () => {
-	const element = document.activeElement as HTMLInputElement;
-
-	if (element.type === 'text') {
-		element.blur()
-	}
-};
+const { ESCAPE, ENTER, SPACE, UP, DOWN, BACKSPACE } = KEYCODES
 
 const initialState = {
 	isOpened: false,
@@ -28,28 +23,56 @@ class Select extends React.Component<SelectProps, SelectState> {
 		valueKey: 'value',
 		labelKey: 'label',
 		options: [],
+		onSelect: noop,
 	}
 
 	state = initialState
 
 	componentDidMount() {
-		document.addEventListener('mousedown', this.clickOutsideHd)
-		window.addEventListener('keydown', this.onKeyDownHd)
+		document.addEventListener('mousedown', this.onClickOutside)
+		window.addEventListener('keydown', this.onKeyDown)
 	}
 
 	componentWillUnmount() {
-		document.removeEventListener('mousedown', this.clickOutsideHd)
-		window.removeEventListener('keydown', this.onKeyDownHd)
+		document.removeEventListener('mousedown', this.onClickOutside)
+		window.removeEventListener('keydown', this.onKeyDown)
 	}
 
 	wrapper: React.RefObject<any> = React.createRef();
 
-	getContext = () => {
-		return {
-			focusOption: this.focusOption,
-			selectOption: this.selectOption,
+	onClickOutside = (event: MouseEvent) => {
+		const { current } = this.wrapper
+
+		if (current && !current.contains(event.target)) {
+			this.setState({ isOpened: false })
 		}
 	};
+
+	onKeyDown = ({ keyCode }: KeyboardEvent) => {
+		const { isSearchable } = this.props
+		const { currentFocusId, isOpened } = this.state
+
+		if (!isOpened) return
+
+		match(keyCode)
+			.on((x) => (x === ESCAPE), this.closeOptions)
+			.on((x) => (x === BACKSPACE && !isSearchable), this.clearInput)
+			.on((x) => ([ENTER, SPACE].includes(x)), () => {
+				this.focusOption(currentFocusId)
+				this.selectOption(currentFocusId)
+			})
+			.on((x) => (x === UP), () => {
+				this.focusOption(this.getNextFocusId(-1))
+			})
+			.on((x) => (x === DOWN), () => {
+				this.focusOption(this.getNextFocusId(1))
+			})
+	};
+
+	getContext = (): ContextType => ({
+		focusOption: this.focusOption,
+		selectOption: this.selectOption,
+	});
 
 	toggleMenu = () => {
 		this.setState((prevState) => ({
@@ -61,14 +84,6 @@ class Select extends React.Component<SelectProps, SelectState> {
 		this.setState({ isOpened: false, isFocused: false }, forcedBlur)
 	}
 
-	clickOutsideHd = (event: MouseEvent) => {
-		const { current } = this.wrapper
-
-		if (current && !current.contains(event.target)) {
-			this.setState({ isOpened: false })
-		}
-	};
-
 	selectOption = (forcedFocusId?: string | number) => {
 		const { options, valueKey, onSelect } = this.props
 		const { currentFocusId } = this.state
@@ -76,67 +91,22 @@ class Select extends React.Component<SelectProps, SelectState> {
 		const realFocusId = forcedFocusId || currentFocusId
 		const findedItem = options.find((option) => option[valueKey] === realFocusId)
 
-		if (typeof onSelect === 'function') {
-			onSelect(findedItem)
+		onSelect(findedItem)
 
-			this.closeOptions()
-		}
+		this.closeOptions()
 	}
-
-	onKeyDownHd = ({ keyCode }: KeyboardEvent) => {
-		const { isOpened, currentFocusId } = this.state
-
-		if (!isOpened) return
-
-		switch (keyCode) {
-			case ESCAPE: return this.closeOptions()
-
-			case BACKSPACE: {
-				if (!this.props.isSearchable) {
-					this.clearInput()
-				}
-
-				break
-			}
-
-			// case TAB:
-			case ENTER:
-			case SPACE: {
-				this.focusOption(currentFocusId)
-				this.selectOption(currentFocusId)
-
-				break
-			}
-
-			case UP: return this.focusOption(this.getNextFocusId(-1))
-
-			case DOWN: return this.focusOption(this.getNextFocusId(1))
-
-			default: return undefined
-		}
-	};
 
 	clearInput = () => {
-		const { onSelect } = this.props
+		this.props.onSelect(undefined)
 
-		if (typeof onSelect === 'function') {
-			onSelect(undefined)
-
-			this.setState({ isOpened: true })
-		}
-	}
-
-	onFocusHd = () => {
-		this.setState({ isOpened: true, isFocused: true })
-	};
-
-	onBlurHd = () => {
-		this.setState({ isFocused: false })
-	}
-
-	onInputHd = () => {
 		this.setState({ isOpened: true })
-	};
+	}
+
+	onFocusHd = () => this.setState({ isOpened: true, isFocused: true });
+
+	onBlurHd = () => this.setState({ isFocused: false });
+
+	onInputHd = () => this.setState({ isOpened: true });
 
 	getNextFocusId = (shift: number): number => {
 		const { length: total } = this.props.options
@@ -145,19 +115,7 @@ class Select extends React.Component<SelectProps, SelectState> {
 		return (total + currentFocusId + shift) % total
 	};
 
-	focusOption = (nextFocusId: number) => {
-		this.setState({
-			currentFocusId: nextFocusId,
-		})
-	}
-
-	onOptionSelectHd = () => {
-		this.selectOption()
-	}
-
-	setFocusId = (nextFocusId) => {
-		this.focusOption(nextFocusId)
-	}
+	focusOption = (currentFocusId: number) => this.setState({ currentFocusId });
 
 	render() {
 		const { options, valueKey, labelKey, isSearchable, isClearable, value } = this.props
