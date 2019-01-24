@@ -34,6 +34,7 @@ export default {
 			browser: true,
 		}),
 		typescript({
+			tsconfig: './tsconfig.json',
 			clean: true,
 			check: false,
 			module: 'ES2015',
