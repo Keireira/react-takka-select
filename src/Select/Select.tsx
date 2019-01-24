@@ -1,8 +1,9 @@
 import * as React from 'react'
 
 import { SelectProvider } from '../context'
-import { Option, Indicator } from '../components'
-import { Body, InputWrapepr, Input, Options, Indicators } from './Select.styles'
+import { Option, Indicator, Input } from '../components'
+import { Body, Options, Indicators } from './Select.styles'
+import { SelectProps, SelectState } from './Select.d'
 
 const [ESCAPE, TAB, ENTER, SPACE, UP, DOWN, BACKSPACE] = [27, 9, 13, 32, 38, 40, 8]
 
@@ -14,7 +15,13 @@ const forcedBlur = () => {
 	}
 };
 
-class Select extends React.Component {
+const initialState = {
+	isOpened: false,
+	isFocused: false,
+	currentFocusId: 0,
+}
+
+class Select extends React.Component<SelectProps, SelectState> {
 	static defaultProps = {
 		isClearable: true,
 		isSearchable: false,
@@ -23,11 +30,7 @@ class Select extends React.Component {
 		options: [],
 	}
 
-	state = {
-		isOpened: false,
-		isFocused: false,
-		currentFocusId: 0,
-	}
+	state = initialState
 
 	componentDidMount() {
 		document.addEventListener('mousedown', this.clickOutsideHd)
@@ -157,31 +160,28 @@ class Select extends React.Component {
 	}
 
 	render() {
-		const { options, valueKey, labelKey, isSearchable, isClearable } = this.props
+		const { options, valueKey, labelKey, isSearchable, isClearable, value } = this.props
 		const { isOpened, currentFocusId } = this.state
 
 		return (
 			<SelectProvider value={this.getContext()}>
 				<Body ref={this.wrapper}>
-					<InputWrapepr>
-						<Input
-							type="text"
-							tabIndex={1}
-							value={this.props.value ? this.props.value[labelKey] : ''}
-							onFocus={this.onFocusHd}
-							onBlur={this.onBlurHd}
-							onChange={this.onInputHd}
-							readOnly={!isSearchable}
-						/>
+					<Input
+						value={value ? value[labelKey] : ''}
+						isSearchable={isSearchable}
 
+						onBlur={this.onBlurHd}
+						onFocus={this.onFocusHd}
+						onChange={this.onInputHd}
+					>
 						<Indicators>
 							{isClearable && (
 								<Indicator name="clear" onMouseUp={this.clearInput}/>
 							)}
 
-							<Indicator name="arrow-down" isActive={isOpened} onMouseUp={this.toggleMenu}/>
+							<Indicator name="arrow-down" type="rotate" isActive={isOpened} onMouseUp={this.toggleMenu}/>
 						</Indicators>
-					</InputWrapepr>
+					</Input>
 
 					{isOpened && (
 						<Options>
