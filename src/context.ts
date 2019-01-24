@@ -1,8 +1,13 @@
 import * as React from 'react'
 
-const noop = () => {}
+import { noop } from '@local/helpers'
 
-const SelectContext = React.createContext({
+export type ContextType = {
+	focusOption: (nextFocusId: number) => void;
+	selectOption: () => void;
+}
+
+const SelectContext = React.createContext<ContextType>({
 	focusOption: noop,
 	selectOption: noop,
 })

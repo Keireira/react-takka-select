@@ -5,6 +5,8 @@ export type SelectProps = {
 	labelKey?: string;
 	options: Object[];
 	value: Object;
+
+	onSelect: (selectedItem: Object) => void;
 }
 
 export type SelectState = {

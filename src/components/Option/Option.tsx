@@ -1,8 +1,9 @@
 import * as React from 'react'
 
+import { SelectConsumer } from '@local/context'
+
 import { OptionProps } from './Option.d'
 import StyledOption from './Option.styles'
-import { SelectConsumer } from '../../context'
 
 class Option extends React.PureComponent<OptionProps> {
 	static contextType: any = SelectConsumer;

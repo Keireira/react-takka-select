@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { toPascalCase } from '@helpers'
+import { toPascalCase } from '@local/helpers'
 
 import * as Icons from './assets'
 import { IconProps } from './Icon.d'
