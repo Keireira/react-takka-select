@@ -5,7 +5,7 @@ import { noop, match, forcedBlur } from '@local/helpers'
 import { Option, Indicator, Input } from '@local/components'
 import { SelectProvider, ContextType } from '@local/context'
 
-import { SelectProps, SelectState } from './Select.d'
+import { SelectProps } from './Select.d'
 import { Body, Options, Indicators } from './Select.styles'
 
 const { ESCAPE, ENTER, SPACE, UP, DOWN, BACKSPACE } = KEYCODES
@@ -16,7 +16,9 @@ const initialState = {
 	currentFocusId: 0,
 }
 
-class Select extends React.Component<SelectProps, SelectState> {
+type State = Readonly<typeof initialState>
+
+class Select extends React.PureComponent<SelectProps, State> {
 	static defaultProps = {
 		isClearable: true,
 		isSearchable: false,
@@ -24,21 +26,26 @@ class Select extends React.Component<SelectProps, SelectState> {
 		labelKey: 'label',
 		options: [],
 		onSelect: noop,
-	}
+	};
 
-	state = initialState
+	state = initialState;
 
 	componentDidMount() {
 		document.addEventListener('mousedown', this.onClickOutside)
 		window.addEventListener('keydown', this.onKeyDown)
-	}
+	};
 
 	componentWillUnmount() {
 		document.removeEventListener('mousedown', this.onClickOutside)
 		window.removeEventListener('keydown', this.onKeyDown)
-	}
+	};
 
 	wrapper: React.RefObject<any> = React.createRef();
+
+	getContext = (): ContextType => ({
+		focusOption: this.focusOption,
+		selectOption: this.selectOption,
+	});
 
 	onClickOutside = (event: MouseEvent) => {
 		const { current } = this.wrapper
@@ -69,20 +76,17 @@ class Select extends React.Component<SelectProps, SelectState> {
 			})
 	};
 
-	getContext = (): ContextType => ({
-		focusOption: this.focusOption,
-		selectOption: this.selectOption,
-	});
-
-	toggleMenu = () => {
-		this.setState((prevState) => ({
-			isOpened: !prevState.isOpened,
-		}))
-	};
-
 	closeOptions = () => {
 		this.setState({ isOpened: false, isFocused: false }, forcedBlur)
-	}
+	};
+
+	clearInput = () => {
+		this.props.onSelect(undefined)
+
+		this.setState({ isOpened: true })
+	};
+
+	focusOption = (currentFocusId: number) => this.setState({ currentFocusId });
 
 	selectOption = (forcedFocusId?: string | number) => {
 		const { options, valueKey, onSelect } = this.props
@@ -94,19 +98,7 @@ class Select extends React.Component<SelectProps, SelectState> {
 		onSelect(findedItem)
 
 		this.closeOptions()
-	}
-
-	clearInput = () => {
-		this.props.onSelect(undefined)
-
-		this.setState({ isOpened: true })
-	}
-
-	onFocusHd = () => this.setState({ isOpened: true, isFocused: true });
-
-	onBlurHd = () => this.setState({ isFocused: false });
-
-	onInputHd = () => this.setState({ isOpened: true });
+	};
 
 	getNextFocusId = (shift: number): number => {
 		const { length: total } = this.props.options
@@ -115,7 +107,17 @@ class Select extends React.Component<SelectProps, SelectState> {
 		return (total + currentFocusId + shift) % total
 	};
 
-	focusOption = (currentFocusId: number) => this.setState({ currentFocusId });
+	toggleMenu = () => {
+		this.setState((prevState) => ({
+			isOpened: !prevState.isOpened,
+		}))
+	};
+
+	onFocusHd = () => this.setState({ isOpened: true, isFocused: true });
+
+	onBlurHd = () => this.setState({ isFocused: false });
+
+	onInputHd = () => this.setState({ isOpened: true });
 
 	render() {
 		const { options, valueKey, labelKey, isSearchable, isClearable, value } = this.props
@@ -158,7 +160,7 @@ class Select extends React.Component<SelectProps, SelectState> {
 				</Body>
 			</SelectProvider>
 		)
-	}
+	};
 }
 
 export default Select

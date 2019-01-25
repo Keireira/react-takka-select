@@ -8,9 +8,3 @@ export type SelectProps = {
 
 	onSelect: (selectedItem: Object) => void;
 }
-
-export type SelectState = {
-	isOpened: boolean;
-	isFocused: boolean;
-	currentFocusId: number;
-}

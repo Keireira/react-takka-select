@@ -4,7 +4,7 @@ const matched = (x) => ({
 })
 
 const match = (x) => ({
-	on: (predicate, fn) => (predicate(x) ? matched(fn(x)) : match(x)),
+	on: (predicate, fn) => predicate(x) ? matched(fn(x)) : match(x),
 	otherwise: (fn) => fn(x),
 })
 
