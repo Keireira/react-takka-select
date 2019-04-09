@@ -13,6 +13,9 @@
 			"@local/helpers": ["helpers/index"],
 			"@local/components": ["components/index"],
 
+			"@local/hooks": ["helpers/hooks/index"],
+			"@local/hooks/*": ["helpers/hooks/*"],
+
 			"@local": ["./index"],
 			"@local/*": ["./*"]
 		},

@@ -120,7 +120,7 @@ class Select extends React.PureComponent<SelectProps, State> {
 	onInputHd = () => this.setState({ isOpened: true });
 
 	render() {
-		const { options, valueKey, labelKey, isSearchable, isClearable, value } = this.props
+		const { options, valueKey, labelKey, isSearchable, isClearable, value, CustomOption } = this.props
 		const { isOpened, currentFocusId } = this.state
 
 		return (
@@ -150,7 +150,7 @@ class Select extends React.PureComponent<SelectProps, State> {
 								const isActive = (value === currentFocusId)
 
 								return (
-									<Option key={value} value={value} isActive={isActive}>
+									<Option key={value} value={value} isActive={isActive} CustomOption={CustomOption}>
 										{option[labelKey]}
 									</Option>
 								)}

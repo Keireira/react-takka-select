@@ -11,6 +11,12 @@ const options = [
 	{ id: 3, label: 'The lazy dog' },
 ]
 
+const CustomOption = ({ isActive, focusOption, selectOption, value, children }) => {
+	return (
+		<li>{children}</li>
+	)
+}
+
 class App extends React.PureComponent {
 	state = {
 		value: options[2],
@@ -28,6 +34,7 @@ class App extends React.PureComponent {
 					valueKey="id"
 					options={options}
 					onSelect={this.onSelect}
+					CustomOption={CustomOption}
 					isSearchable={false}
 					isClearable={true}
 				/>
